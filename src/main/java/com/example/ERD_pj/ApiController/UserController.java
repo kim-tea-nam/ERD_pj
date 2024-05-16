@@ -9,7 +9,7 @@ public class UserController {
 
   @GetMapping("/")
   @ResponseBody
-  public String main() {
+  public String hw() {
     return "Hello World";
   }
 }

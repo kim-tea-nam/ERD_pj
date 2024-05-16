@@ -1,10 +1,11 @@
 package com.example.ERD_pj.Entity;
 
-import jakarta.annotation.Nonnull;
+
 import jakarta.persistence.*;
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class User {
 
   @Id
