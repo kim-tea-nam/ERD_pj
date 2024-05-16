@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @Getter
 @Builder
@@ -26,7 +27,5 @@ public class Post {
   @ManyToOne
   @JoinColumn(name = "user_id",nullable = false)
   private User writer; // 유저 엔티티를 참조하는 필드
-
-
 
 }
