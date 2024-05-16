@@ -2,10 +2,16 @@ package com.example.ERD_pj.Entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor  // 기본 생성자 추가
+@AllArgsConstructor  // 모든 필드를 인자로 받는 생성자 추가
 public class User {
 
   @Id
@@ -16,7 +22,11 @@ public class User {
   private String name;
 
   @Column(nullable = false)
-  private String grade;
+  private Integer age;
+
+  @Column(nullable = false)
+  private String email;
+
 
 
 }
