@@ -9,6 +9,6 @@ public interface UserService {
   List<UserDTO> getAllUsers();
   UserDTO getUserById(Long id);
   String createUser(UserDTO userDTO);
-  UserDTO updateUser(Long id, UserDTO userDTO);
-  void deleteUser(Long id);
+  String updateUser(Long id, UserDTO userDTO);
+  String deleteUser(Long id);
 }
