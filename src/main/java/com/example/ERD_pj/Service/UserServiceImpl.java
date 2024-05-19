@@ -46,9 +46,9 @@ public class UserServiceImpl implements UserService{
         .build();
     if (user != null) {
       userRepository.save(user);
-      return "성공";
+      return "유저 생성 성공";
     }
-    return "실패";
+    return "유저 생성 실패";
   }
 
   @Override
