@@ -3,8 +3,9 @@ package com.example.ERD_pj.ApiController;
 import com.example.ERD_pj.DTO.UserDTO;
 import com.example.ERD_pj.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,29 +20,45 @@ public class UserController {
   }
 
   @GetMapping("/getAll")
-  public List<UserDTO> getAllusers() {
-    return userService.getAllUsers();
+  public ResponseEntity<List<UserDTO>> getAllUsers() {
+    List<UserDTO> users = userService.getAllUsers();
+    return new ResponseEntity<>(users, HttpStatus.OK);
   }
 
-  @GetMapping("/getID/{id}")
-  public UserDTO getID(@PathVariable Long id) {
-    return userService.getUserById(id);
+  @GetMapping("/get/{id}")
+  public ResponseEntity<UserDTO> getID(@PathVariable("id") Long id) {
+    UserDTO user = userService.getUserById(id);
+    if (user != null) {
+      return new ResponseEntity<>(user, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
   }
 
   @PostMapping("/create")
-  public String CreateUser(@RequestBody UserDTO userDTO) {
-    return userService.createUser(userDTO);
+  public ResponseEntity<String> createUser(@RequestBody UserDTO userDTO) {
+    try {
+      String response = userService.createUser(userDTO);
+      return new ResponseEntity<>(response, HttpStatus.CREATED);
+    } catch (Exception e) {
+      throw new RuntimeException("Error creating user", e);
+    }
   }
 
   @PutMapping("/update/{id}")
-  public String UpdateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+  public ResponseEntity<String> updateUser(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
     return userService.updateUser(id, userDTO);
   }
 
-  @DeleteMapping("/delete/{id}")
-  public String deleteUser(@PathVariable Long id) {
-    return userService.deleteUser(id);
-  }
 
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<String> deleteUser(@PathVariable("id") Long id) {
+    try {
+      String response = userService.deleteUser(id);
+      return new ResponseEntity<>(response, HttpStatus.OK);
+    } catch (Exception e) {
+      throw new RuntimeException("Error deleting user", e);
+    }
+  }
 
 }

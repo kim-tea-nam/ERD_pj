@@ -27,4 +27,16 @@ public class User {
   @Column(nullable = false)
   private String email;
 
+  public void updateDetails(String name, Integer age, String email) {
+    if (name != null) {
+      this.name = name;
+    }
+    if (age != null) {
+      this.age = age;
+    }
+    if (email != null) {
+      this.email = email;
+    }
+  }
+
 }
