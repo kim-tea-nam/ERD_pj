@@ -22,6 +22,12 @@ public class User {
   private String name;
 
   @Column(nullable = false)
+  private String password;
+
+  @Column(nullable = false)
+  private String role;
+
+  @Column(nullable = false)
   private Integer age;
 
   @Column(nullable = false)
@@ -38,5 +44,7 @@ public class User {
       this.email = email;
     }
   }
+
+
 
 }

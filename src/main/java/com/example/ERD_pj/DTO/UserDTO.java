@@ -38,4 +38,14 @@ public class UserDTO {
         .build();
   }
 
+  public User join(UserDTO userDTO) {
+    return User.builder()
+        .name(userDTO.getName())
+        .email(userDTO.getEmail())
+        .build();
+  }
+
+    public void Setemail(String email){
+      this.email = email;
+    }
 }

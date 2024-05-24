@@ -50,18 +50,13 @@ public class UserServiceImpl implements UserService{
 
   @Override
   public ResponseEntity<String> updateUser(Long id, UserDTO userDTO) {
-    if (userRepository.existsById(id)) {
-      User userToUpdate = userRepository.findById(id).orElse(null);
-      if (userToUpdate != null) {
-        userToUpdate.updateDetails(userDTO.getName(), userDTO.getAge(), userDTO.getEmail());
-        userRepository.save(userToUpdate);
-        return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
-      } else {
-        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-      }
-    } else {
-      return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-    }
+    return userRepository.findById(id)
+        .map(userToUpdate -> {
+          userToUpdate.updateDetails(userDTO.getName(), userDTO.getAge(), userDTO.getEmail());
+          userRepository.save(userToUpdate);
+          return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
+        })
+        .orElseGet(() -> new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND));
   }
 
   @Override

@@ -2,7 +2,6 @@ package com.example.ERD_pj.ApiController;
 
 import com.example.ERD_pj.DTO.UserDTO;
 import com.example.ERD_pj.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ public class UserController {
 
   private final UserService userService;
 
-  @Autowired
   public UserController(UserService userService) {
     this.userService = userService;
   }
@@ -44,6 +42,7 @@ public class UserController {
       throw new RuntimeException("Error creating user", e);
     }
   }
+
 
   @PutMapping("/update/{id}")
   public ResponseEntity<String> updateUser(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
