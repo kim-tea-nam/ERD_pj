@@ -3,6 +3,8 @@ package com.example.ERD_pj.ApiController;
 
 import com.example.ERD_pj.DTO.JoinDTO;
 import com.example.ERD_pj.Service.JoinService;
+import lombok.Getter;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,12 +19,21 @@ public class JoinController {
   }
 
 
-  @PostMapping("/join")
+  @PostMapping("/signUp")
   public String joinProcess(@RequestBody JoinDTO joinDTO) {
     joinService.JoinProcess(joinDTO);
     return "ok";
   }
 
+//  @PostMapping("/login")
+//  public void loginProcess(){
+//
+//  }
+//
+//  @GetMapping("/userGet")
+//  public  void userGet() {
+//
+//  }
 
 
 }

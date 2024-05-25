@@ -14,7 +14,7 @@ public class JoinServiceImpl implements JoinService{
 
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-  @Autowired
+
   public JoinServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
     this.userRepository = userRepository;
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
