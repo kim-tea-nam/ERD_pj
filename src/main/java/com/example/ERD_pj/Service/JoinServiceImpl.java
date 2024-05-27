@@ -12,6 +12,7 @@ public class JoinServiceImpl implements JoinService{
 
   private final UserRepository userRepository;
 
+  @Autowired
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 

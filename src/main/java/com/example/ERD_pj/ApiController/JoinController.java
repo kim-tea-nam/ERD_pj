@@ -3,17 +3,16 @@ package com.example.ERD_pj.ApiController;
 
 import com.example.ERD_pj.DTO.JoinDTO;
 import com.example.ERD_pj.Service.JoinService;
-import lombok.Getter;
-import org.springframework.security.core.parameters.P;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/join")
 public class JoinController {
 
   private final JoinService joinService;
 
-
+  @Autowired
   public JoinController(JoinService joinService) {
     this.joinService = joinService;
   }
