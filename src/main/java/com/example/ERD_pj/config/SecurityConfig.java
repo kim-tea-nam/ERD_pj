@@ -46,10 +46,12 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+    //http.cors();
     http.csrf((auth) -> auth.disable());
     http.formLogin((auth) -> auth.disable());
     http.httpBasic((auth) -> auth.disable());
-    http.authorizeHttpRequests((auth) -> auth
+    http.authorizeHttpRequests((auth) ->
+        auth
             .requestMatchers("/join/**","/login").permitAll()
             .requestMatchers("/reissue").permitAll()
             .requestMatchers("/user").hasRole("ADMIN")

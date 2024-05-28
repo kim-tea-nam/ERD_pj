@@ -19,7 +19,13 @@ public class JWTUtil {
   }
 
   public String getCategory(String token) {
-    return  Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category",String.class);
+    return  Jwts
+        .parser()
+        .verifyWith(secretKey)
+        .build()
+        .parseSignedClaims(token)
+        .getPayload()
+        .get("category",String.class);
   }
 
   public String getUsername(String token) {

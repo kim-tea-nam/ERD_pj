@@ -6,6 +6,7 @@ import com.example.ERD_pj.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class JoinServiceImpl implements JoinService{
@@ -23,6 +24,7 @@ public class JoinServiceImpl implements JoinService{
 
 
   @Override
+  @Transactional
   public void JoinProcess(JoinDTO joinDTO) {
     String name = joinDTO.getName();
     String password = joinDTO.getPassword();

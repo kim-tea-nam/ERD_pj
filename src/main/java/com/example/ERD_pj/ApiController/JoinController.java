@@ -23,16 +23,5 @@ public class JoinController {
     joinService.JoinProcess(joinDTO);
     return "ok";
   }
-
-//  @PostMapping("/login")
-//  public void loginProcess(){
-//
-//  }
-//
-//  @GetMapping("/userGet")
-//  public  void userGet() {
-//
-//  }
-
-
+  
 }
