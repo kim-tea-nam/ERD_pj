@@ -1,9 +1,9 @@
 package com.example.ERD_pj.JWT;
 
 import com.example.ERD_pj.Entity.User;
+import com.example.ERD_pj.Repository.UserRepository;
 import com.example.ERD_pj.Service.UserServiceImpl;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Collection;
@@ -22,10 +21,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
   private final AuthenticationManager authenticationManager;
   private final JWTUtil jwtUtil;
+  private final UserRepository userRepository;
 
-  public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
+  public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, UserRepository userRepository) {
     this.authenticationManager = authenticationManager;
     this.jwtUtil = jwtUtil;
+    this.userRepository = userRepository;
   }
 
   @Override
@@ -48,7 +49,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
   //로그인 성공시 실행하는 메소드 (여기서 JWT를 발급하면 됨)
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
-    String email = authentication.getName();
+    String username = authentication.getName();
+
+
+    // 사용자의 정보를 데이터베이스에서 가져옵니다.
+    User user = userRepository.findByname(username);
+
+    // 사용자의 이메일을 가져옵니다.
+    String email = user.getEmail();
 
     System.out.println(email);
 

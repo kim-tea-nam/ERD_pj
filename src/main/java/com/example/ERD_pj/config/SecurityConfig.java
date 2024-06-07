@@ -3,6 +3,7 @@ package com.example.ERD_pj.config;
 import com.example.ERD_pj.JWT.JWTFilter;
 import com.example.ERD_pj.JWT.JWTUtil;
 import com.example.ERD_pj.JWT.LoginFilter;
+import com.example.ERD_pj.Repository.UserRepository;
 import com.example.ERD_pj.Service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,12 +25,14 @@ public class SecurityConfig {
   private final AuthenticationConfiguration authenticationConfiguration;
   private final JWTUtil jwtUtil;
   private final UserServiceImpl userServiceImpl;
+  private final UserRepository userRepository;
 
   @Autowired
-  public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, UserServiceImpl userServiceImpl) {
+  public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, UserServiceImpl userServiceImpl, UserRepository userRepository) {
     this.authenticationConfiguration = authenticationConfiguration;
     this.jwtUtil = jwtUtil;
     this.userServiceImpl = userServiceImpl;
+    this.userRepository = userRepository;
   }
 
   //AuthenticationManager Bean 등록
@@ -60,7 +63,7 @@ public class SecurityConfig {
             .anyRequest().authenticated());
 
     http.addFilterBefore(new JWTFilter(jwtUtil,userServiceImpl), LoginFilter.class);
-    http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil,userRepository), UsernamePasswordAuthenticationFilter.class);
 
 
     http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
