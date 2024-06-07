@@ -3,7 +3,7 @@ package com.example.ERD_pj.config;
 import com.example.ERD_pj.JWT.JWTFilter;
 import com.example.ERD_pj.JWT.JWTUtil;
 import com.example.ERD_pj.JWT.LoginFilter;
-import io.jsonwebtoken.Jwts;
+import com.example.ERD_pj.Service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,11 +23,13 @@ public class SecurityConfig {
   //AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자 주입
   private final AuthenticationConfiguration authenticationConfiguration;
   private final JWTUtil jwtUtil;
+  private final UserServiceImpl userServiceImpl;
 
   @Autowired
-  public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
+  public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, UserServiceImpl userServiceImpl) {
     this.authenticationConfiguration = authenticationConfiguration;
     this.jwtUtil = jwtUtil;
+    this.userServiceImpl = userServiceImpl;
   }
 
   //AuthenticationManager Bean 등록
@@ -57,7 +59,7 @@ public class SecurityConfig {
             .requestMatchers("/user").hasRole("ADMIN")
             .anyRequest().authenticated());
 
-    http.addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
+    http.addFilterBefore(new JWTFilter(jwtUtil,userServiceImpl), LoginFilter.class);
     http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
 

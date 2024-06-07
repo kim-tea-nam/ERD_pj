@@ -9,6 +9,7 @@ public interface UserService {
 
   List<UserDTO> getAllUsers();
   UserDTO getUserById(Long id);
+  UserDTO getUserByemail(String email);
   String createUser(UserDTO userDTO);
   ResponseEntity<String> updateUser(Long id, UserDTO userDTO);
   String deleteUser(Long id);

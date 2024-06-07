@@ -40,6 +40,16 @@ public class UserServiceImpl implements UserService{
     }
   }
 
+  @Override
+  public UserDTO getUserByemail(String email) {
+    User user = userRepository.findByemail(email);
+    if (user != null) {
+      return UserDTO.fromEntity(user);
+    } else {
+      return null;
+    }
+  }
+
 
   @Override
   public String createUser(UserDTO userDTO) {

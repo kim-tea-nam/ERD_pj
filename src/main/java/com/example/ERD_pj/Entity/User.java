@@ -30,7 +30,7 @@ public class User {
   @Column(nullable = false)
   private Integer age;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String email;
 
   public void updateDetails(String name, Integer age, String email) {
