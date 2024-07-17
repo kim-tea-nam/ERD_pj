@@ -2,6 +2,8 @@ package com.example.ERD_pj.ApiController;
 
 import com.example.ERD_pj.DTO.UserDTO;
 import com.example.ERD_pj.Service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +28,19 @@ public class UserController {
   @GetMapping("/get/{id}")
   public ResponseEntity<UserDTO> getID(@PathVariable("id") Long id) {
     UserDTO user = userService.getUserById(id);
-    if (user != null) {
-      return new ResponseEntity<>(user, HttpStatus.OK);
-    } else {
+    if (user == null) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    return new ResponseEntity<>(user, HttpStatus.OK);
+  }
+
+  @GetMapping("getBytoken")
+  public ResponseEntity<UserDTO> getBytoken(HttpServletRequest request, HttpServletResponse response) {
+    UserDTO user = userService.getBytoken(request, response);
+    if (user == null) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    return new ResponseEntity<>(user, HttpStatus.OK);
   }
 
   @PostMapping("/create")
@@ -59,5 +69,4 @@ public class UserController {
       throw new RuntimeException("Error deleting user", e);
     }
   }
-
 }

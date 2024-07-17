@@ -2,6 +2,7 @@ package com.example.ERD_pj.JWT;
 
 import com.example.ERD_pj.DTO.CustomUserDetails;
 import com.example.ERD_pj.Entity.User;
+import com.example.ERD_pj.Service.UserService;
 import com.example.ERD_pj.Service.UserServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -19,11 +20,11 @@ import java.io.PrintWriter;
 public class JWTFilter extends OncePerRequestFilter {
 
   private final JWTUtil jwtUtil;
-  private final UserServiceImpl userServiceImpl;
+  private final UserService userService;
 
-  public JWTFilter(JWTUtil jwtUtil, UserServiceImpl userServiceImpl) {
+  public JWTFilter(JWTUtil jwtUtil, UserService userService) {
     this.jwtUtil = jwtUtil;
-    this.userServiceImpl = userServiceImpl;
+    this.userService = userService;
   }
 
   @Override
@@ -66,8 +67,8 @@ public class JWTFilter extends OncePerRequestFilter {
     }
     String email = jwtUtil.getEmail(accessToken);
     System.out.println(email);
-    
-    User user = userServiceImpl.getUserByemail(email).toEntity();
+
+    User user = userService.getUserByemail(email).toEntity();
 
     CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
